@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vladislav Gross — GROSS philosophy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&family=Marck+Script&display=swap" rel="stylesheet">
+  <style>
+    /* —— 1. Дизайн-система: вертикальный ритм 8px —— */
+    :root {
+      --space-1: 0.5rem;
+      --space-2: 1rem;
+      --space-3: 1.5rem;
+      --space-4: 2rem;
+      --space-5: 2.5rem;
+      --space-6: 3rem;
+      --space-8: 4rem;
+      --space-10: 5rem;
+      --page: #fcfbf9;
+      --ink: #0f0f0f;
+      --ink-soft: #4a4a4a;
+      --accent: #4a4038;
+      --accent-light: rgba(74, 64, 56, 0.07);
+      --rule: #e5e3df;
+      --gold: #8b7355;
+      --column: 38rem;
+      --radius-sm: 6px;
+      --radius-phone: 28px;
+      --shadow-soft: 0 4px 24px rgba(0,0,0,0.06);
+      --shadow-phone: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+      --transition: 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* —— 2. Выделение текста в цвет акцента —— */
+    ::selection {
+      background: var(--accent-light);
+      color: var(--ink);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--page);
+      color: var(--ink);
+      font-size: 1.125rem;
+      line-height: 1.7;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* —— 3. Журнальная шапка: двойная линия, минимализм —— */
+    .masthead {
+      text-align: center;
+      padding: var(--space-6) var(--space-4) var(--space-4);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .masthead::before {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .masthead-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 300;
+    }
+
+    .masthead-issue {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: var(--space-1);
+    }
+
+    /* —— 4. Обложка: кинематографичный градиент, акцентная линия —— */
+    .cover {
+      position: relative;
+      width: 100%;
+      min-height: 95vh;
+      overflow: hidden;
+    }
+
+    .cover-image {
+      width: 100%;
+      height: 95vh;
+      object-fit: cover;
+      object-position: center 35%;
+      display: block;
+    }
+
+    .cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 100%, transparent 0%, rgba(0,0,0,0.4) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 38%, transparent 62%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-8) var(--space-6) var(--space-10);
+    }
+
+    .cover-scroll-hint {
+      position: absolute;
+      bottom: var(--space-4);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollHint 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollHint {
+      0%, 100% { opacity: 0.4; transform: translateX(-50%) scaleY(0.8); }
+      50% { opacity: 1; transform: translateX(-50%) scaleY(1); }
+    }
+
+    .cover-title {
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 200;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.98;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3), 0 4px 50px rgba(0,0,0,0.4), 0 0 80px rgba(0,0,0,0.15);
+    }
+
+    .cover-title-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin-top: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .cover-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      margin-top: 0;
+    }
+
+    .cover-subtitle .script-word {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.5em;
+      color: rgba(255,255,255,0.98);
+      text-transform: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* —— 5. Номера страниц в углах (как в журнале) —— */
+    .page-num {
+      position: fixed;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.625rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      opacity: 0.8;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .page-num--tl { top: var(--space-3); left: var(--space-4); }
+    .page-num--tr { top: var(--space-3); right: var(--space-4); }
+
+    .page-num--tl::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: calc(100% + 0.75rem);
+      width: 20px;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .page-num--tr::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 0.75rem);
+      width: 20px;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* —— 6. Сетка: большой номер секции в стиле Kinfolk —— */
+    .spread {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--space-4);
+      position: relative;
+    }
+
+    .spread--numbered::before {
+      content: attr(data-num);
+      position: absolute;
+      left: var(--space-4);
+      top: -0.2em;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(6rem, 15vw, 10rem);
+      font-weight: 200;
+      background: linear-gradient(180deg, var(--rule) 0%, rgba(229,227,223,0.3) 70%, transparent 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--rule);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* —— 7. Номера секций в стиле редакции —— */
+    .section-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.5625rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      margin-bottom: var(--space-1);
+      display: block;
+    }
+
+    .section-num::after {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
+      background: var(--rule);
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .article-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.625rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--space-2);
+      display: block;
+    }
+
+    .article-title {
+      font-size: clamp(2rem, 3.5vw, 2.85rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin-bottom: var(--space-4);
+      max-width: 16ch;
+      color: var(--ink);
+    }
+
+    .spread--numbered .article-title {
+      position: relative;
+      padding-bottom: var(--space-2);
+    }
+
+    .spread--numbered .article-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .article-body {
+      max-width: var(--column);
+      margin-bottom: var(--space-6);
+    }
+
+    .article-body p {
+      margin-bottom: 1.35em;
+      color: var(--ink);
+      font-size: 1.0625rem;
+    }
+
+    .article-body p:first-of-type {
+      font-size: 1.125rem;
+      line-height: 1.75;
+    }
+
+    .article-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* —— 8. Буквица: обводка + лёгкий золотой фон —— */
+    .dropcap {
+      position: relative;
+    }
+
+    .dropcap::first-letter {
+      float: left;
+      font-size: 4.25rem;
+      line-height: 0.8;
+      margin: 0.05em 0.12em 0 0;
+      font-weight: 400;
+      color: var(--ink);
+      padding: 0.15em 0.12em 0 0;
+      border-bottom: 2px solid var(--gold);
+      background: linear-gradient(135deg, rgba(139,115,85,0.06) 0%, transparent 100%);
+    }
+
+    /* —— 9. Выноска: полоса + кавычка + лёгкий фон —— */
+    .pullquote-wrap {
+      position: relative;
+      margin: var(--space-10) 0;
+      padding: var(--space-6) var(--space-6) var(--space-6) var(--space-8);
+      max-width: 30rem;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      border-left: 3px solid var(--gold);
+      background: linear-gradient(90deg, rgba(139,115,85,0.04) 0%, transparent 30%);
+    }
+
+    .pullquote-wrap::before {
+      content: '"';
+      position: absolute;
+      top: -0.2em;
+      left: var(--space-4);
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--gold);
+      opacity: 0.25;
+      font-family: 'Marck Script', cursive;
+    }
+
+    .pullquote {
+      font-size: clamp(1.6rem, 2.5vw, 2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* —— Каллиграфическое слово: контраст и лёгкая тень —— */
+    .script-word {
+      font-family: 'Marck Script', cursive;
+      font-weight: 400;
+      font-size: 1.35em;
+      color: #6b5a48;
+      font-style: normal;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .pullquote .script-word { font-size: 1.3em; }
+    .article-title .script-word { font-size: 0.92em; }
+    .article-label .script-word { font-size: 1.15em; }
+    .cover-subtitle .script-word { color: rgba(255,255,255,0.98); text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
+    /* —— 10. Разделитель: линия + точка в духе Vogue —— */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      margin: var(--space-8) auto;
+      max-width: 120px;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 0;
+      border-top: 1px solid var(--rule);
+      max-width: 64px;
+    }
+
+    .section-divider .section-divider-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(139,115,85,0.15);
+    }
+
+    /* —— Вертикальные фото —— */
+    .vertical-photo {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(139,115,85,0.12);
+    }
+
+    .vertical-photo img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      vertical-align: top;
+      transition: transform 0.5s ease;
+    }
+
+    .vertical-photo:hover img {
+      transform: scale(1.02);
+    }
+
+    /* —— 12. Подпись к фото: с акцентной точкой —— */
+    .photo-caption {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.5625rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: var(--space-2);
+      padding-bottom: var(--space-3);
+      padding-left: var(--space-2);
+      border-left: 2px solid var(--gold);
+      line-height: 1.5;
+      margin-left: 0;
+      transition: border-left-width 0.25s ease, color 0.25s ease;
+    }
+
+    .vertical-photo:hover .photo-caption {
+      border-left-width: 4px;
+      color: var(--ink);
+    }
+
+    .photo-credit {
+      font-style: italic;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+    }
+
+    /* —— 13. Разворот: текст + фото (единый стиль для всех) —— */
+    .spread-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      align-items: start;
+      margin: var(--space-8) 0;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 var(--space-4);
+    }
+
+    .spread-row.reverse {
+      direction: rtl;
+    }
+
+    .spread-row.reverse > * {
+      direction: ltr;
+    }
+
+    .spread-row .text-block {
+      max-width: 36rem;
+    }
+
+    /* Центрируем фото в колонке */
+    .spread-row .photo-col {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .spread-row .photo-col .vertical-photo {
+      margin: 0;
+    }
+
+    /* —— Ценности: крупный читаемый текст —— */
+    .values-list {
+      max-width: var(--column);
+      margin: var(--space-4) 0 var(--space-6);
+    }
+
+    .value-row {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4) 0;
+      padding-left: var(--space-2);
+      margin-left: calc(-1 * var(--space-2));
+      border-bottom: 1px solid var(--rule);
+      border-left: 2px solid transparent;
+      align-items: flex-start;
+      transition: border-left-color 0.3s ease, background 0.3s ease;
+    }
+
+    .value-row:hover {
+      border-left-color: rgba(139,115,85,0.25);
+      background: rgba(139,115,85,0.02);
+    }
+
+    .value-row:first-child {
+      border-left-color: rgba(139,115,85,0.2);
+    }
+
+    .value-row:last-child {
+      border-bottom: none;
+    }
+
+    .value-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      min-width: 2.5rem;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+    }
+
+    .value-row h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .value-row p {
+      font-size: 1.125rem;
+      color: var(--ink);
+      line-height: 1.7;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* —— 15. Секция-пауза: фон + водяной знак —— */
+    .section-alt {
+      background: linear-gradient(180deg, var(--accent-light) 0%, transparent 18%, transparent 82%, var(--accent-light) 100%);
+      padding: var(--space-10) 0;
+      margin: var(--space-8) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-alt::before {
+      content: '20';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Marck Script', cursive;
+      font-size: clamp(12rem, 25vw, 20rem);
+      color: rgba(139,115,85,0.04);
+      pointer-events: none;
+    }
+
+    .section-alt .pullquote-wrap {
+      border-left-color: var(--gold);
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-alt .spread {
+      padding: 0 var(--space-4);
+    }
+
+    /* —— 17. Футер: финальный аккорд —— */
+    .folio-footer {
+      text-align: center;
+      padding: var(--space-10) var(--space-4);
+      margin-top: var(--space-10);
+      position: relative;
+      background: linear-gradient(to top, var(--accent-light) 0%, transparent 100%);
+      padding-top: var(--space-10);
+      padding-bottom: var(--space-10);
+    }
+
+    .folio-footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .folio-footer .name {
+      font-size: 1.35rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-top: var(--space-3);
+      color: var(--ink);
+    }
+
+    .folio-footer .meta {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: var(--space-2);
+      opacity: 0.95;
+    }
+
+    .folio-footer .closing-script {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-top: var(--space-4);
+      opacity: 0.9;
+    }
+
+    /* —— Финал: чуть крупнее заголовок, остальное как у всех —— */
+    .section-final .article-title {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      margin-bottom: var(--space-4);
+      max-width: none;
+    }
+
+    .section-final .article-body p {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+    }
+
+    /* —— 18. Плавное появление секций при скролле —— */
+    @media (prefers-reduced-motion: no-preference) {
+      .spread, .spread-row, .section-alt {
+        animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .spread { animation-delay: 0.05s; }
+      .spread-row:nth-of-type(1) { animation-delay: 0.08s; }
+      .spread-row:nth-of-type(2) { animation-delay: 0.12s; }
+      .section-alt { animation-delay: 0.1s; }
+      .spread-row:nth-of-type(3) { animation-delay: 0.12s; }
+      .spread-row:nth-of-type(4) { animation-delay: 0.16s; }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    /* —— 19. Адаптив: телефонные фото уже на мобильных —— */
+    @media (max-width: 900px) {
+      .spread-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-5);
+        direction: ltr;
+        margin: var(--space-8) 0;
+      }
+
+      .spread-row.reverse {
+        direction: ltr;
+      }
+
+      .spread-row .text-block {
+        max-width: none;
+      }
+
+      .spread-row .photo-col {
+        order: -1;
+      }
+
+      .vertical-photo {
+        max-width: 300px;
+      }
+
+      .article-body {
+        font-size: 1rem;
+      }
+
+      .page-num--tr {
+        display: none;
+      }
+
+      .spread--numbered::before {
+        font-size: 4rem;
+        opacity: 0.5;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cover-title {
+        letter-spacing: 0.08em;
+      }
+
+      .cover-overlay {
+        padding: var(--space-6) var(--space-3) var(--space-8);
+      }
+
+      .pullquote {
+        font-size: 1.35rem;
+      }
+
+      .pullquote-wrap {
+        padding: var(--space-4) var(--space-3);
+      }
+
+      .vertical-photo {
+        max-width: 280px;
+      }
+
+      .section-final .article-title {
+        font-size: clamp(1.85rem, 5vw, 2.5rem);
+      }
+
+      .section-final .article-body p {
+        font-size: 1rem;
+      }
+    }
+
+    /* —— 20. Фокус для доступности —— */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    a:focus-visible {
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Номера страниц -->
+  <span class="page-num page-num--tl" aria-hidden="true">04</span>
+  <span class="page-num page-num--tr" aria-hidden="true">05</span>
+
+  <header class="masthead">
+    <div class="masthead-brand">GROSS philosophy</div>
+    <div class="masthead-issue">Февраль 2025 · 20 лет</div>
+  </header>
+
+  <main>
+    <!-- Единственное полноэкранное фото: обложка -->
+    <section class="cover">
+      <img class="cover-image" src="images/hero-city.png" alt="Владислав Гросс на фоне ночного города">
+      <div class="cover-overlay">
+        <h1 class="cover-title">Vladislav Gross</h1>
+        <div class="cover-title-line" aria-hidden="true"></div>
+        <p class="cover-subtitle">Человек, который смотрит <span class="script-word">вперёд</span></p>
+        <div class="cover-scroll-hint" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <div class="spread spread--numbered" data-num="01">
+      <span class="section-num">01</span>
+      <span class="article-label">Введение</span>
+      <h2 class="article-title">Не ждать будущее — <span class="script-word">строить</span> его</h2>
+      <div class="article-body dropcap">
+        <p>
+          Владиславу Гросс двадцать лет, но взгляд на мир — на десятилетия вперёд. Он верит, что смысл жизни не в том, чтобы просто существовать, а в том, чтобы постоянно становиться лучше: умнее, смелее, осознаннее.
+        </p>
+        <p>
+          <span class="script-word">Рост</span> для него — не линейная история. Это спираль: каждый виток выше предыдущего. Вчерашние победы становятся базой для завтрашних вызовов. Ошибки — уроками.
+        </p>
+      </div>
+      <div class="pullquote-wrap">
+        <p class="pullquote">«Я не хочу ждать будущее. Я хочу его <span class="script-word">строить</span>.»</p>
+      </div>
+    </div>
+
+    <div class="section-divider" aria-hidden="true"><span class="section-divider-dot"></span></div>
+
+    <!-- Разворот: ценности + телефонное фото (военный портрет) -->
+    <div class="spread-row">
+      <div class="text-block">
+        <span class="section-num">02</span>
+        <span class="article-label">Ценности</span>
+        <h2 class="article-title">Во что он верит</h2>
+        <div class="values-list">
+          <div class="value-row">
+            <span class="value-num">01</span>
+            <div>
+              <h3><span class="script-word">Смелость</span></h3>
+              <p>Не бояться неудач и мнения других. Пробовать, падать и снова вставать.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="value-num">02</span>
+            <div>
+              <h3>Обучение</h3>
+              <p>Каждый день — шанс узнать что-то новое. Знания превращаются в возможности.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="value-num">03</span>
+            <div>
+              <h3>Честность</h3>
+              <p>Перед собой и перед миром. Без самообмана невозможно расти по-настоящему.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="value-num">04</span>
+            <div>
+              <h3>Действие</h3>
+              <p>Идеи ничего не стоят без исполнения. <span class="script-word">Мечта</span> становится реальностью только в движении.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="photo-col">
+        <div class="vertical-photo">
+          <img src="images/portrait-military.png" alt="Портрет в военной форме">
+          <p class="photo-caption">Дисциплина и целеустремлённость</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Вдохновение: портрет у книг + Элон Маск -->
+    <div class="spread-row reverse">
+      <div class="photo-col">
+        <div class="vertical-photo">
+          <img src="images/portrait-books.png" alt="Владислав у книжной полки">
+          <p class="photo-caption">Мышление и мечта · Portrait</p>
+        </div>
+      </div>
+      <div class="text-block">
+        <span class="section-num">03</span>
+        <span class="article-label">Вдохновение</span>
+        <h2 class="article-title">Элон Маск: почему он важен</h2>
+        <div class="article-body">
+          <p>
+            Для Владислава Элон Маск — не просто медийная фигура. Это пример человека, который мыслит системами, а не задачами. Не «как заработать», а «как изменить отрасль». Не «как выжить», а «как колонизировать Марс».
+          </p>
+          <p>
+            Маск напоминает: самые большие цели кажутся безумием до тех пор, пока кто-то не начинает к ним идти. SpaceX, Tesla, Neuralink — это не про деньги. Это про веру в то, что один человек и команда вокруг него могут сдвинуть человечество вперёд. Именно так Владислав хочет относиться к своим целям — без страха масштаба.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-alt">
+      <div class="spread">
+        <div class="pullquote-wrap">
+          <p class="pullquote">Самый важный проект в моей жизни — я <span class="script-word">сам</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Рост + стрельба из лука (телефон) -->
+    <div class="spread-row">
+      <div class="text-block">
+        <span class="section-num">04</span>
+        <span class="article-label"><span class="script-word">Рост</span></span>
+        <h2 class="article-title">График личного развития</h2>
+        <p class="article-body">
+          Рост — не пункт назначения, а способ <span class="script-word">путешествия</span>. Фокус, целеустремлённость и постоянное движение вперёд.
+        </p>
+      </div>
+      <div class="photo-col">
+        <div class="vertical-photo">
+          <img src="images/archery.png" alt="Стрельба из лука">
+          <p class="photo-caption">Фокус и целеустремлённость</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Коллаборация: телефонное фото -->
+    <div class="spread-row reverse">
+      <div class="photo-col">
+        <div class="vertical-photo">
+          <img src="images/collab.png" alt="Работа в команде">
+          <p class="photo-caption">Идеи и команда</p>
+        </div>
+      </div>
+      <div class="text-block">
+        <span class="article-label">Бизнес и команда</span>
+        <h2 class="article-title">Единороги и стендап</h2>
+        <p class="article-body">
+          Владислав — часть мира, где идеи рождаются за столом с стикерами и смартфоном, а бизнес-туры и стартапы становятся реальностью. Командная работа, юмор и амбиции — то, что двигает вперёд.
+        </p>
+      </div>
+    </div>
+
+    <!-- Финал: крупнее заголовок, текст и фото -->
+    <div class="spread-row section-final">
+      <div class="photo-col">
+        <div class="vertical-photo">
+          <img src="images/business-standup.png" alt="Business Tour Standup">
+          <p class="photo-caption">Business Tour Standup · Единороги</p>
+        </div>
+      </div>
+      <div class="text-block">
+        <span class="article-label"><span class="script-word">Финал</span></span>
+        <h2 class="article-title"><span class="script-word">Рост</span> без границ</h2>
+        <p class="article-body">
+          Двадцать лет — только <span class="script-word">начало</span>. Город за спиной, команда рядом, цели — на горизонте. Так выглядит путь того, кто не ждёт будущее, а строит его.
+        </p>
+      </div>
+    </div>
+
+    <footer class="folio-footer">
+      <p class="name">Vladislav Gross</p>
+      <p class="meta">Portrait · 20 · Growth & Vision · Февраль 2025</p>
+      <p class="closing-script">До встречи на вершине</p>
+    </footer>
+  </main>
+</body>
+</html>
